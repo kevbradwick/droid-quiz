@@ -13,6 +13,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String INDEX_KEY = "index";
 
     private Question[] questions = new Question[]{
             new Question(R.string.question_1, true),
@@ -59,8 +60,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState(Bundle)");
+        outState.putInt(INDEX_KEY, currentQuestionIndex);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate()");
+
+        if (savedInstanceState != null) {
+            currentQuestionIndex = savedInstanceState.getInt(INDEX_KEY);
+            question = questions[currentQuestionIndex];
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
