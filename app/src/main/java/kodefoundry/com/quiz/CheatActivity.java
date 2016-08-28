@@ -16,8 +16,11 @@ public class CheatActivity extends AppCompatActivity {
     private static final String PACKAGE_NAME = CheatActivity.class.getPackage().toString();
     private static final String EXTRA_ANSWER_IS_TRUE = PACKAGE_NAME + "answer_is_true";
     private static final String EXTRA_ANSWER_SHOWN = PACKAGE_NAME + "answer_shown";
+    private static final String ANSWER_TEXT = PACKAGE_NAME + "answer_text";
 
     private boolean answerIsTrue;
+
+    private int answerText;
 
     /**
      * Convenience method to create a new intent for this activity with the
@@ -45,17 +48,17 @@ public class CheatActivity extends AppCompatActivity {
         final TextView textView = (TextView) findViewById(R.id.answer_text_view);
         final Button showAnswer = (Button) findViewById(R.id.show_answer_button);
 
+        if (savedInstanceState != null) {
+            textView.setText(savedInstanceState.getInt(ANSWER_TEXT));
+            setAnswerShownResult(true);
+        }
+
         showAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Show answer button clicked");
-
-                // display the answer
-                if (answerIsTrue) {
-                    textView.setText(R.string.true_button);
-                } else {
-                    textView.setText(R.string.false_button);
-                }
+                answerText = answerIsTrue ? R.string.true_button : R.string.false_button;
+                textView.setText(answerText);
                 setAnswerShownResult(true);
             }
         });
@@ -70,6 +73,14 @@ public class CheatActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.putExtra(EXTRA_ANSWER_SHOWN, isAnswerShown);
         setResult(RESULT_OK, intent);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (answerText != 0) {
+            outState.putInt(ANSWER_TEXT, answerText);
+        }
     }
 
     /**
