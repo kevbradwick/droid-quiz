@@ -1,12 +1,17 @@
 package kodefoundry.com.quiz;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -27,7 +32,7 @@ public class CheatActivity extends AppCompatActivity {
      * required extras.
      *
      * @param packageContext the activity context
-     * @param answerIsTrue the answer to the question
+     * @param answerIsTrue   the answer to the question
      * @return a new intent
      */
     static Intent newIntent(Context packageContext, boolean answerIsTrue) {
@@ -44,13 +49,22 @@ public class CheatActivity extends AppCompatActivity {
         // obtain the answer to the question from the intent extras.
         answerIsTrue = getIntent().getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false);
 
+        TextView apiLevel = (TextView) findViewById(R.id.api_version_text);
+        if (apiLevel != null) {
+            String versionLine = getString(R.string.api_version, Build.VERSION.SDK_INT);
+            apiLevel.setText(versionLine);
+        }
+
         // the ui elements on the layout
         final TextView textView = (TextView) findViewById(R.id.answer_text_view);
         final Button showAnswer = (Button) findViewById(R.id.show_answer_button);
 
         if (savedInstanceState != null) {
-            textView.setText(savedInstanceState.getInt(ANSWER_TEXT));
-            setAnswerShownResult(true);
+            int resourceText = savedInstanceState.getInt(ANSWER_TEXT);
+            if (resourceText != 0) {
+                textView.setText(resourceText);
+                setAnswerShownResult(true);
+            }
         }
 
         showAnswer.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +74,24 @@ public class CheatActivity extends AppCompatActivity {
                 answerText = answerIsTrue ? R.string.true_button : R.string.false_button;
                 textView.setText(answerText);
                 setAnswerShownResult(true);
+
+                int cx = showAnswer.getWidth() / 2;
+                int cy = showAnswer.getHeight() / 2;
+                float radius = showAnswer.getWidth();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    Animator anim = ViewAnimationUtils.createCircularReveal(showAnswer, cx, cy, radius, 0);
+                    anim.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            showAnswer.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                    anim.start();
+                } else {
+                    showAnswer.setVisibility(View.INVISIBLE);
+                }
             }
         });
 
