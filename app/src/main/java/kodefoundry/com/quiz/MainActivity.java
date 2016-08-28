@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String INDEX_KEY = "index";
+    private static final String IS_CHEATING = "is_cheating";
     private static final int REQUEST_CODE_CHEAT = 0;
 
     private Question[] questions = new Question[]{
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         Log.d(TAG, "onSaveInstanceState(Bundle)");
         outState.putInt(INDEX_KEY, currentQuestionIndex);
+        outState.putBoolean(IS_CHEATING, isCheating);
     }
 
     @Override
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState != null) {
             currentQuestionIndex = savedInstanceState.getInt(INDEX_KEY);
+            isCheating = savedInstanceState.getBoolean(IS_CHEATING, false);
             question = questions[currentQuestionIndex];
         }
 
