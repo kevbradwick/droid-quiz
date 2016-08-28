@@ -1,5 +1,6 @@
 package kodefoundry.com.quiz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String INDEX_KEY = "index";
+    private static final int REQUEST_CODE_CHEAT = 0;
 
     private Question[] questions = new Question[]{
             new Question(R.string.question_1, true),
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private int currentQuestionIndex = 0;
+
+    private boolean isCheating;
 
     // first question is always at index 0
     private Question question = questions[currentQuestionIndex];
@@ -52,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkAnswer(boolean userAnswer) {
-        int message = R.string.answer_correct;
+        int message = isCheating ? R.string.answer_correct_cheated : R.string.answer_correct;
         if (userAnswer != question.getAnswer()) {
-            message = R.string.answer_incorrect;
+            message = isCheating ? R.string.answer_incorrect_cheated : R.string.answer_incorrect;
         }
         Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
     }
@@ -123,6 +127,33 @@ public class MainActivity extends AppCompatActivity {
                 navigateQuestion(true);
             }
         });
+
+        // cheating
+        Button cheatButton = (Button) findViewById(R.id.cheat_button);
+        cheatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "Cheating invoked!");
+                boolean answerIsTrue = question.getAnswer();
+                Intent intent = CheatActivity.newIntent(MainActivity.this, answerIsTrue);
+                startActivityForResult(intent, REQUEST_CODE_CHEAT);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == REQUEST_CODE_CHEAT) {
+            if (data == null) {
+                return;
+            }
+
+            isCheating = CheatActivity.wasAnswerShown(data);
+        }
     }
 
     @Override

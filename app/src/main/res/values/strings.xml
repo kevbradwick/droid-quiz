@@ -5,17 +5,44 @@
     <string name="previous_question">Previous Question</string>
     <string name="next_question">Next Question</string>
     <string name="answer_correct">Correct!</string>
+    <string name="answer_correct_cheated">Correct, but you cheated!</string>
+    <string name="answer_incorrect_cheated">Wrong answer, and you even cheated!</string>
     <string name="answer_incorrect">Wrong Answer!</string>
+    <string name="warning_text">Are you sure you want to do this?</string>
+    <string name="show_answer_button">Show answer</string>
+    <string name="cheat_button">Cheat!</string>
+    <string name="judgement_toast">Cheating is wrong.</string>
 
     <!-- Questions taken from http://readymadepubquiz.com/tag/true-or-false/ -->
-    <string name="question_1">A man from the USA consumed his 26,000th Big Mac on 11th October 2012, after eating at least one a day for forty years.</string>
-    <string name="question_2">The longest distance swam underwater in one breath is 200metres.</string>
-    <string name="question_3">The fastest time to eat 15 Ferrero Rocher is 1 minute 10 seconds.</string>
-    <string name="question_4">The record for most needles inserted into the head is 15,000.</string>
-    <string name="question_5">The world’s longest legs belong to a Russian lady and measure 132cm (51.9 inches)</string>
-    <string name="question_6">The heaviest aircraft pulled by a single man weighed 188.83 tonnes and was pulled 8.8 metres.</string>
-    <string name="question_7">The record for the fastest time to solve a Rubik’s Cube one-handed is 37 seconds.</string>
-    <string name="question_8">The world’s tallest living man is 251cm / 8 ft 3 in.</string>
-    <string name="question_9">The most expensive car number plate, showing only the number ‘1’, was bought in the United Arab Emirates for 52.2 million dirham, the approximate equivalent of £7.2 million.</string>
-    <string name="question_10">The record for the longest rail tunnel is held by the Channel Tunnel between Britain and France.</string>
+    <string name="question_1">A man from the USA consumed his 26,000th Big Mac
+        on 11th October 2012, after eating at least one a day for forty years.
+    </string>
+    <string name="question_2">The longest distance swam underwater in one breath
+        is 200metres.
+    </string>
+    <string name="question_3">The fastest time to eat 15 Ferrero Rocher is 1
+        minute 10 seconds.
+    </string>
+    <string name="question_4">The record for most needles inserted into the head
+        is 15,000.
+    </string>
+    <string name="question_5">The world’s longest legs belong to a Russian lady
+        and measure 132cm (51.9 inches)
+    </string>
+    <string name="question_6">The heaviest aircraft pulled by a single man
+        weighed 188.83 tonnes and was pulled 8.8 metres.
+    </string>
+    <string name="question_7">The record for the fastest time to solve a Rubik’s
+        Cube one-handed is 37 seconds.
+    </string>
+    <string name="question_8">The world’s tallest living man is 251cm / 8 ft 3
+        in.
+    </string>
+    <string name="question_9">The most expensive car number plate, showing only
+        the number ‘1’, was bought in the United Arab Emirates for 52.2 million
+        dirham, the approximate equivalent of £7.2 million.
+    </string>
+    <string name="question_10">The record for the longest rail tunnel is held by
+        the Channel Tunnel between Britain and France.
+    </string>
 </resources>
